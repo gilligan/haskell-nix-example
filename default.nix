@@ -5,8 +5,6 @@
 let 
 
   inherit (pkgs.haskell.lib) buildStrictly justStaticExecutables overrideCabal;
-  inherit (pkgs.lib.strings) splitString;
-  inherit (builtins) elemAt;
 
   ghc = pkgs.haskell.packages."${ghcVersion}";
 
@@ -27,7 +25,7 @@ let
 
 in rec {
 
-  simple = justStaticExecutables (cabal2nix "simple" (pkgs.lib.cleanSource ./.) {});
+  simple = justStaticExecutables (cabal2nix "haskell-nix-example" (pkgs.lib.cleanSource ./.) {});
 
   shell = addDepsToEnv simple extraDeps;
 
