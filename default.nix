@@ -12,12 +12,18 @@ let
 
   addDepsToEnv = drv: deps: drv.env.overrideAttrs(oldAttrs: { buildInputs = [ deps ]; });
 
+  # Add packages that you would like to have in your
+  # development environment.
   extraDeps = [ pkgs.cabal-install 
                 pkgs.haskellPackages.ghcid 
                 pkgs.haskellPackages.stylish-haskell 
                 simple-ghcid
               ];
 
+  # for convenience let's create a little script to run
+  # ghcid on the right target.. in real world cases you
+  # might want to pass additional targets or pick specific
+  # targets..
   simple-ghcid = pkgs.writeScriptBin "simple-ghcid"
   ''
     ${ghc.ghcid}/bin/ghcid -c "${ghc.cabal-install}/bin/cabal new-repl simple"
